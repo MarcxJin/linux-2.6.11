@@ -511,6 +511,8 @@ static inline int hlist_empty(const struct hlist_head *h)
 	return !h->first;
 }
 
+
+/* MJ: 统一了删除逻辑 */
 static inline void __hlist_del(struct hlist_node *n)
 {
 	struct hlist_node *next = n->next;

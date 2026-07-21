@@ -525,8 +525,10 @@ int set_current_groups(struct group_info *group_info);
 struct audit_context;		/* See audit.c */
 struct mempolicy;
 
+/* MJ: Main stucture for processes. */
 struct task_struct {
 	volatile long state;	/* -1 unrunnable, 0 runnable, >0 stopped */
+	/* MJ: Pointer to the thread_info in kernel stack to trace back. */
 	struct thread_info *thread_info;
 	atomic_t usage;
 	unsigned long flags;	/* per process flags, defined below */
@@ -535,7 +537,16 @@ struct task_struct {
 	int lock_depth;		/* Lock depth */
 
 	int prio, static_prio;
+	/*
+	 * MJ
+	 * list_head: stucture for doubly-linked list.
+	 * run_list: a spot for prio_array in CPU to link in.
+	 */
 	struct list_head run_list;
+	/*
+	 * MJ
+	 * pointer to the actual active processes list.
+	 */
 	prio_array_t *array;
 
 	unsigned long sleep_avg;
@@ -803,7 +814,9 @@ void yield(void);
  */
 extern struct exec_domain	default_exec_domain;
 
+/* MJ: Each process has one thread_union which is 8K or 4K. */
 union thread_union {
+	/* MJ: thread_info in low pos, others are for the stack. */
 	struct thread_info thread_info;
 	unsigned long stack[THREAD_SIZE/sizeof(long)];
 };

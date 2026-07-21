@@ -13,7 +13,9 @@ enum pid_type
 struct pid
 {
 	/* Try to keep pid_chain in the same cacheline as nr for find_pid */
+	/* MJ: this number theoretically equals to pid/tgid/... */
 	int nr;
+	/* MJ: list of the pids with different NRs, but collision */
 	struct hlist_node pid_chain;
 	/* list of pids with the same nr, only one of them is in the hash */
 	struct list_head pid_list;

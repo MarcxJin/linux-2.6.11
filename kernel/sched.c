@@ -183,9 +183,9 @@ static unsigned int task_timeslice(task_t *p)
 typedef struct runqueue runqueue_t;
 
 struct prio_array {
-	unsigned int nr_active;
-	unsigned long bitmap[BITMAP_SIZE];
-	struct list_head queue[MAX_PRIO];
+	unsigned int nr_active; // MJ: 目前在active表里的数量
+	unsigned long bitmap[BITMAP_SIZE];  // MJ 1 表示某prio有进程，0表示没有
+	struct list_head queue[MAX_PRIO]; //MJ: 140 list_head
 };
 
 /*

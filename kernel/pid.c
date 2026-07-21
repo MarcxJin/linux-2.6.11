@@ -204,6 +204,7 @@ void fastcall detach_pid(task_t *task, enum pid_type type)
 	free_pidmap(nr);
 }
 
+/* MJ: Given a pid, find task structure */
 task_t *find_task_by_pid_type(int type, int nr)
 {
 	struct pid *pid;
